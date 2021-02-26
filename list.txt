@@ -1,0 +1,2 @@
+zipped/20200505_devices.csv.gz
+zipped/20200505_sensor_data.csv.gz
