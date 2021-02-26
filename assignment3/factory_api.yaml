@@ -1,0 +1,159 @@
+openapi: 3.0.0
+info:
+  title: getFactoryList
+  version: '1.0'
+  description: ''
+paths:
+  /factory:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    type: object
+                    properties:
+                      page:
+                        type: integer
+                      total_page:
+                        type: integer
+                      each_page:
+                        type: integer
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                        latitude:
+                          type: string
+                        longtitude:
+                          type: string
+                        address:
+                          type: string
+              examples:
+                example-1:
+                  value:
+                    meta:
+                      page: 1
+                      total_page: 300
+                      each_page: 100
+                    data:
+                      - id: f1
+                        name: factory one
+                        latitude: '20.232'
+                        longitude: '-20.232'
+                        address: 'No. 1st, Lane 23, Ming-Huan Rd, Taipei City'
+      operationId: get-factory
+      description: 'Get paginated list of factories. '
+      parameters:
+        - schema:
+            type: integer
+          in: query
+          name: page
+          description: The nth page for pagination.
+          required: true
+        - schema:
+            type: integer
+          in: query
+          name: each_page
+          description: The number of entities for each page.
+  '/factory/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: ID of a specific factory.
+    patch:
+      summary: ''
+      operationId: patch-factory-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      result:
+                        type: boolean
+                      status:
+                        type: string
+              examples:
+                example-1:
+                  value:
+                    data:
+                      result: false
+                      status: 'Factory Not Exists!'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                address:
+                  type: string
+        description: 'name and address are both optional '
+      description: Update corresponding factory with specified ID
+  '/factory/{id}/sensors':
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      factory_id:
+                        type: string
+                      sensors:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            type:
+                              type: string
+              examples:
+                example-1:
+                  value:
+                    data:
+                      factory_id: f2
+                      sensors:
+                        - id: s1
+                          type: temparature_sensor
+      operationId: get-factory-sensor
+      description: Get all sensor information of a specified ID factory
+      parameters: []
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: ID of a specific factory.
+components:
+  schemas: {}
